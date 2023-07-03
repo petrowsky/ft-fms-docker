@@ -1,0 +1,99 @@
+# by Claris
+
+FROM arm64v8/ubuntu:22.04
+
+# update all software download sources
+RUN DEBIAN_FRONTEND=noninteractive apt update
+
+# upgrade all installed software
+# packages
+RUN DEBIAN_FRONTEND=noninteractive apt full-upgrade -y
+
+# install filemaker server dependencies
+RUN DEBIAN_FRONTEND=noninteractive      \
+    apt install -y                      \
+        acl                             \
+        apache2-bin                     \
+        apache2-utils                   \
+        avahi-daemon                    \
+        curl                            \
+        firewalld                       \
+        fonts-baekmuk                   \
+        fonts-liberation2               \
+        fonts-noto                      \
+        fonts-takao                     \
+        fonts-wqy-zenhei                \
+        libaio1                         \
+        libavahi-client3                \
+        libbz2-1.0                      \
+        libcurl4                        \
+        libdjvulibre21                  \
+        libevent-2.1-7                  \
+        libexpat1                       \
+        libfontconfig1                  \
+        libfreetype6                    \
+        libgomp1                        \
+        libicu70                        \
+        libilmbase25                    \
+        libjpeg-turbo8                  \
+        liblqr-1-0                      \
+        liblzma5                        \
+        libodbc1                        \
+        libopenexr25                    \
+        libpng16-16                     \
+        libsasl2-2                      \
+        libtiff5                        \
+        libuuid1                        \
+        libvpx7                         \
+        libwebpdemux2                   \
+        libwebpmux3                     \
+        libxml2                         \
+        libxpm4                         \
+        libxslt1.1                      \
+        odbcinst1debian2                \
+        openjdk-17-jdk                  \
+        openssl                         \
+        policycoreutils                 \
+        sysstat                         \
+        unzip                           \
+        zip                             \
+        libantlr3c-3.4-0                \
+        libboost-chrono1.74.0           \
+        libboost-system1.74.0           \
+        libboost-thread1.74.0           \
+        libc++1-14                      \
+        libcurl3-gnutls                 \
+        libetpan20                      \
+        libheif1                        \
+        libomp5-14                      \
+        libopencv-core4.5d              \
+        libopencv-highgui4.5d           \
+        libopencv-imgproc4.5d           \
+        libpam0g                        \
+        libzbar0                        \
+        logrotate                       \
+        nginx                           \
+        lsb-release                     \
+        zlib1g
+
+# install user management
+RUN DEBIAN_FRONTEND=noninteractive apt install -y init
+
+# clean up installations
+RUN DEBIAN_FRONTEND=noninteractive apt --fix-broken install -y
+RUN DEBIAN_FRONTEND=noninteractive apt autoremove -y
+RUN DEBIAN_FRONTEND=noninteractive apt clean -y
+
+# document the ports that should be
+# published when filemaker server
+# is installed
+EXPOSE 80
+EXPOSE 443
+EXPOSE 2399
+EXPOSE 5003
+
+# when containers run, start this
+# command as root to initialize
+# user management
+USER root
+CMD ["/sbin/init"]
