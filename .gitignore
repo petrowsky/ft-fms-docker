@@ -4,3 +4,4 @@
 *.ca-bundle
 *.crt
 *.p7b
+*.deb

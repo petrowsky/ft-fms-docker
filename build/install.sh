@@ -130,8 +130,9 @@ image_name=ubuntu-fms-19
 
 # query required Ubuntu version
 printf "Please enter which Ubuntu version you require:\n"
-printf "  [0] Ubuntu 18.04 (up to filemaker-server 19.4, incl. 19.5 for Ubuntu 18)\n"
-printf "  [1] Ubuntu 20.04 (since filemaker-server 19.6, incl. 19.5 for Ubuntu 20)\n"
+printf "  [0] Ubuntu 18.04 AMD (up to filemaker-server 19.4, incl. 19.5 for Ubuntu 18)\n"
+printf "  [1] Ubuntu 20.04 AMD (since filemaker-server 19.6, incl. 19.5 for Ubuntu 20)\n"
+printf "  [2] Ubuntu 22.04 ARM (since filemaker-server 20.1.2)\n"
 read -r user_input
 
 case $user_input in
@@ -145,8 +146,13 @@ case $user_input in
   base_image=fms-base:20.04
   dockerfile=Dockerfile-20
   ;;
+2)
+  # Ubuntu 22.10
+  base_image=fms-base:22.04
+  dockerfile=Dockerfile-22-ARM
+  ;;
 *)
-  printf "please choose between 0 or 1"
+  printf "please choose between 0 or 2"
   exit 1
   ;;
 esac
